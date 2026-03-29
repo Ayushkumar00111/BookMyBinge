@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-// GET /events
+
 export const getEvents = async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -12,7 +12,7 @@ export const getEvents = async (req, res) => {
   }
 };
 
-// POST /events
+
 export const createEvent = async (req, res) => {
   try {
     const { title, description, date, total_capacity } = req.body;
@@ -26,7 +26,7 @@ export const createEvent = async (req, res) => {
       [title, description, date, total_capacity, total_capacity]
     );
 
-    res.json({ message: "Event created ✅" });
+    res.json({ message: "Event created " });
   } catch (err) {
     res.status(500).json({ error: err.message ,reuslt:"kuch nhi milss"});
   }
@@ -40,7 +40,6 @@ export const markAttendance = async (req, res) => {
       return res.status(400).json({ error: "Code required" });
     }
 
-    // booking check
     const [booking] = await pool.query(
       "SELECT tickets_booked FROM bookings WHERE booking_code=? AND event_id=?",
       [code, eventId]
@@ -50,14 +49,13 @@ export const markAttendance = async (req, res) => {
       return res.status(404).json({ error: "Invalid code" });
     }
 
-    // attendance mark (optional but strong)
     await pool.query(
       "INSERT INTO attendance (event_id, booking_code) VALUES (?, ?)",
       [eventId, code]
     );
 
     res.json({
-      message: "Entry allowed ✅",
+      message: "Entry allowed ",
       tickets: booking[0].tickets_booked,
     });
   } catch (err) {

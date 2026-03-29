@@ -13,7 +13,7 @@ export const createBooking = async (req, res) => {
   try {
     await conn.beginTransaction();
 
-    // 🔒 lock row (race condition avoid)
+
     const [event] = await conn.query(
       "SELECT remaining_tickets FROM events WHERE id=? FOR UPDATE",
       [event_id]
@@ -29,13 +29,13 @@ export const createBooking = async (req, res) => {
 
     const bookingCode = uuidv4();
 
-    // insert booking
+  
     await conn.query(
       "INSERT INTO bookings (user_id, event_id, booking_code, tickets_booked) VALUES (?, ?, ?, ?)",
       [user_id, event_id, bookingCode, tickets]
     );
 
-    // update tickets
+    
     await conn.query(
       "UPDATE events SET remaining_tickets = remaining_tickets - ? WHERE id=?",
       [tickets, event_id]
@@ -44,7 +44,7 @@ export const createBooking = async (req, res) => {
     await conn.commit();
 
     res.json({
-      message: "Booking successful ✅",
+      message: "Booking successful ",
       bookingCode,
     });
   } catch (err) {
