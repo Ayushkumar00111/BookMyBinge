@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Event Booking API
+  version: 1.0.0
+
+paths:
+  /events:
+    get:
+      summary: Get all events
+      responses:
+        200:
+          description: Success
+
+    post:
+      summary: Create event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, date, total_capacity]
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                date:
+                  type: string
+                total_capacity:
+                  type: integer
+      responses:
+        200:
+          description: Event created
+
+  /bookings:
+    post:
+      summary: Book tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, event_id, tickets]
+              properties:
+                user_id:
+                  type: integer
+                event_id:
+                  type: integer
+                tickets:
+                  type: integer
+      responses:
+        200:
+          description: Booking success
+
+  /users/{id}/bookings:
+    get:
+      summary: Get user bookings
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+
+  /events/{id}/attendance:
+    post:
+      summary: Mark attendance
+      parameters:
+        - name: id
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code]
+              properties:
+                code:
+                  type: string
+      responses:
+        200:
+          description: Entry allowed
