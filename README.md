@@ -180,7 +180,7 @@ http://localhost:3000/api-docs
 ##  Important Notes
 
 * Transactions ensure **consistent ticket booking**
-* Row-level locking prevents **double booking**
+
 * `.env` file is not included for security reasons
 
 ---
