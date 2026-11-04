@@ -12,7 +12,7 @@ A backend system to manage events and ticket bookings, built using Node.js, Expr
 *  Unique booking codes for each reservation
 *  Retrieve user bookings
 *  Event attendance validation using booking code
-*  API documentation using Swagger (OpenAPI)
+
 
 ---
 
